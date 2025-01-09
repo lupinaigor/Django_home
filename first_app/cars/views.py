@@ -23,7 +23,7 @@ def get_single_car(request, pk):
     serializer = CarSerializer(car)
     return Response(serializer.data)
 
-# добавление
+# добавлення
 @api_view(['PUT'])
 def update_car(request, pk):
     try:
@@ -37,6 +37,18 @@ def update_car(request, pk):
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Приклад запиту для Postman
+# PUT-запит на URL /update/<id>/
+#
+# {
+#     "brand": "Toyota",
+#     "model": "Camry",
+#     "year": 2023,
+#     "price": 32000
+# }
+
+
+
 # видалення
 @api_view(['DELETE'])
 def delete_car(request, pk):
@@ -48,9 +60,19 @@ def delete_car(request, pk):
     car.delete()
     return Response({"message": f"Car with id {pk} was deleted successfully."}, status=status.HTTP_200_OK)
 
+# Приклад запиту для Postman
+# DELETE-запит на URL /delete/3/
+# Має бути відповідь:
+# {
+#     "message": "Car with id 3 was deleted successfully."
+# }
+
+
 # читання усіх
 @api_view(['GET'])
 def get_all_cars(request):
-    cars = Car.objects.all()  # Получаем все объекты Car
-    serializer = CarSerializer(cars, many=True)  # Сериализуем список объектов
+    cars = Car.objects.all()  # отримуємо всі об'екти Car
+    serializer = CarSerializer(cars, many=True)  # Серіализуемо список об'ъ'ектів
     return Response(serializer.data, status=status.HTTP_200_OK)
+# Приклад запиту для Postman
+# GET-запит на URL /all/
